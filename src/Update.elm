@@ -13,6 +13,7 @@ import Set exposing (..)
 type Msg
     = UpdateDrinks (Result Http.Error (List Drink))
     | LocationSearch String
+    | CloseAlert
 
 
 getLocations : List Drink -> Set.Set String
@@ -35,6 +36,9 @@ update msg model =
 
         LocationSearch search ->
             ( { model | locationSearch = search }, Cmd.none )
+
+        CloseAlert ->
+            ( { model | alertMessage = Nothing }, Cmd.none )
 
 
 

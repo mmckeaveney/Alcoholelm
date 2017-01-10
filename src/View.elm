@@ -50,13 +50,26 @@ renderDrinks location drinks =
                 )
 
 
+viewAlertMessage : Maybe String -> Html Msg
+viewAlertMessage alertMessage =
+    case alertMessage of
+        Just message ->
+            div [ class "alert" ]
+                [ span [ class "close", onClick CloseAlert ] [ text "X" ]
+                , text message
+                ]
+
+        Nothing ->
+            text ""
+
+
 appView : Model -> Html Msg
 appView model =
     div [ class "app-container" ]
         [ h1 [ class "title" ] [ text "Elmcohol Alcohol Database" ]
+        , viewAlertMessage model.alertMessage
         , h2 [ class "current-search" ] [ text model.locationSearch ]
         , div [ class "search" ] [ input [ class "search__bar", placeholder "Type in a location to see the drinks..", onInput LocationSearch ] [] ]
         , ul [ class "locations" ] (renderLocations model.locationSearch model.locations)
         , ul [ class "drinks" ] (renderDrinks model.locationSearch model.drinks)
-        , div [] [ text (toString model.alertMessage) ]
         ]
